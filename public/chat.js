@@ -14,8 +14,19 @@ btn.addEventListener('click', () => {
   });
 });
 
+message.addEventListener('keypress', () => {
+  socket.emit('chat-typing', username.value)
+});
+
 socket.on('chat-message', (data) => {
+  actions.innerHTML = '';
   output.innerHTML += `<p>
     <strong>${data.username}</strong> : ${data.message}
+  </p>`;
+});
+
+socket.on('chat-typing', data => {
+  actions.innerHTML = `<p>
+    <em>${data} is typing a message...</em>
   </p>`;
 });
