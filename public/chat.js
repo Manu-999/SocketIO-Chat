@@ -8,9 +8,14 @@ let output = document.getElementById('output');
 let actions = document.getElementById('actions');
 
 btn.addEventListener('click', () => {
-  console.log({
-    username: username.value,
-    message: message.value
+  socket.emit('chat-message', {
+    message: message.value,
+    username: username.value
   });
 });
 
+socket.on('chat-message', (data) => {
+  output.innerHTML += `<p>
+    <strong>${data.username}</strong> : ${data.message}
+  </p>`;
+});
